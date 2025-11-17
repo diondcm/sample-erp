@@ -116,6 +116,32 @@ begin
   fdConnection.ExecSQL(
     'CREATE INDEX IF NOT EXISTS idx_CustName ON Customers (CustomerName);'
   );
+
+  // --- NEW: Sales Header (From specs-04.md) ---
+  fdConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Sales (' +
+    '  SaleID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    '  CustomerID INTEGER NOT NULL, ' +
+    '  SaleDate DATETIME DEFAULT CURRENT_TIMESTAMP, ' +
+    '  Status TEXT DEFAULT ''DRAFT'', ' + // DRAFT, FINALIZED, CANCELLED
+    '  TotalAmount REAL DEFAULT 0, ' +
+    '  CONSTRAINT fk_sales_customer FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ' +
+    ');'
+  );
+
+  // --- NEW: Sales Items - The Shopping Cart (From specs-04.md) ---
+  fdConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS SaleItems (' +
+    '  ItemID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    '  SaleID INTEGER NOT NULL, ' +
+    '  ProductID INTEGER NOT NULL, ' +
+    '  Quantity INTEGER DEFAULT 1, ' +
+    '  UnitPrice REAL NOT NULL, ' + // Snapshotted price at time of sale
+    '  SubTotal REAL, ' + // Calculated as Quantity * UnitPrice
+    '  CONSTRAINT fk_items_sale FOREIGN KEY (SaleID) REFERENCES Sales (SaleID) ON DELETE CASCADE, ' +
+    '  CONSTRAINT fk_items_product FOREIGN KEY (ProductID) REFERENCES Products (ProductID) ' +
+    ');'
+  );
 end;
 
 function TdmCore.GetConnection: TFDConnection;

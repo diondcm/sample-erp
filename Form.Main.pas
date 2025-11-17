@@ -22,7 +22,7 @@ type
     FDataModule: TdmCore; // Main Form owns the Data Module
 
     procedure ApplyGlobalTheme;
-    procedure OpenChildForm(FormClass: class of TfrmBase);
+    procedure OpenChildForm(FormClass: TBaseFormClass);
   public
     { Public declarations }
   end;
@@ -86,7 +86,7 @@ begin
 end;
 
 // This is how you open ANY new screen in the system
-procedure TfrmMain.OpenChildForm(FormClass: class of TfrmBase);
+procedure TfrmMain.OpenChildForm(FormClass: TBaseFormClass);
 var
   NewForm: TfrmBase;
 begin

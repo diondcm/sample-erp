@@ -11,6 +11,8 @@ type
   TAppTheme = (atLight, atDark);
   TAppLanguage = (alEnglish, alPortuguese, alSpanish);
 
+  TBaseFormClass = class of TfrmBase;
+
   TfrmBase = class(TForm)
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

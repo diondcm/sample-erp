@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls,
-  uDataModule, uBaseForm; // Reference the new units
+  uDataModule, uBaseForm, uFormProducts; // Reference the new units
 
 type
   TfrmMain = class(TForm)
@@ -13,9 +13,12 @@ type
     svSidebar: TSplitView;
     pnlContent: TPanel; // Area where child forms will appear
     btnToggleTheme: TButton; // For testing
+    btnProducts: TButton;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure btnToggleThemeClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnProductsClick(Sender: TObject);
   private
     FCurrentTheme: TAppTheme;
     FCurrentLang: TAppLanguage;
@@ -99,6 +102,14 @@ begin
   NewForm.BorderStyle := bsNone;
   NewForm.Align := alClient;
   NewForm.Show;
+end;
+
+// Event handler for Products button
+procedure TfrmMain.btnProductsClick(Sender: TObject);
+begin
+  // The beauty of the architecture:
+  // We just pass the class type. The logic handles the injection.
+  OpenChildForm(TfrmProducts);
 end;
 
 end.

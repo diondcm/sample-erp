@@ -51,6 +51,15 @@ object frmMain: TfrmMain
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
+      object btnProducts: TButton
+        Left = 16
+        Top = 16
+        Width = 168
+        Height = 40
+        Caption = 'Products (Electronics)'
+        TabOrder = 0
+        OnClick = btnProductsClick
+      end
     end
   end
   object pnlContent: TPanel

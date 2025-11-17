@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls,
   Vcl.ComCtrls, Vcl.ImgList,
-  uDataModule, uBaseForm, uFormProducts, uFormCustomers, uFormSales; // Reference the new units
+  uDataModule, uBaseForm, uFormProducts, uFormCustomers, uFormSales, uFormReports; // Reference the new units
 
 type
   TfrmMain = class(TForm)
@@ -17,6 +17,7 @@ type
     btnProducts: TButton;
     btnCustomers: TButton;
     btnSales: TButton;
+    btnReports: TButton;
     Panel1: TPanel;
     cmbLanguage: TComboBoxEx;
     chkCreateDocked: TCheckBox;
@@ -27,6 +28,7 @@ type
     procedure btnProductsClick(Sender: TObject);
     procedure btnCustomersClick(Sender: TObject);
     procedure btnSalesClick(Sender: TObject);
+    procedure btnReportsClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
   private
     FCurrentTheme: TAppTheme;
@@ -148,6 +150,13 @@ procedure TfrmMain.btnSalesClick(Sender: TObject);
 begin
   // Injects the Connection, Theme, and Language automatically via TBaseForm logic
   OpenChildForm(TfrmSales);
+end;
+
+// Event handler for Reports button
+procedure TfrmMain.btnReportsClick(Sender: TObject);
+begin
+  // Injects the Connection, Theme, and Language automatically via TBaseForm logic
+  OpenChildForm(TfrmReports);
 end;
 
 // Event handler for Language change

@@ -2,8 +2,11 @@ inherited frmProducts: TfrmProducts
   Caption = 'Product Management - Electronics'
   ClientHeight = 600
   ClientWidth = 1000
+  StyleElements = [seFont, seClient, seBorder]
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 1016
+  ExplicitHeight = 639
   TextHeight = 15
   object pnlControls: TPanel
     Left = 0
@@ -18,7 +21,7 @@ inherited frmProducts: TfrmProducts
     object lblSKU: TLabel
       Left = 16
       Top = 24
-      Width = 125
+      Width = 135
       Height = 15
       Caption = 'SKU (Stock Keeping Unit):'
     end
@@ -46,14 +49,14 @@ inherited frmProducts: TfrmProducts
     object lblStockLevel: TLabel
       Left = 16
       Top = 216
-      Width = 65
+      Width = 62
       Height = 15
       Caption = 'Stock Level:'
     end
     object lblFCC: TLabel
       Left = 16
       Top = 264
-      Width = 77
+      Width = 73
       Height = 15
       Caption = 'FCC ID (Reg.):'
     end
@@ -155,7 +158,7 @@ inherited frmProducts: TfrmProducts
       object lblImagesInfo: TLabel
         Left = 16
         Top = 8
-        Width = 142
+        Width = 135
         Height = 15
         Caption = 'Product Images (Max 3):'
         Font.Charset = DEFAULT_CHARSET

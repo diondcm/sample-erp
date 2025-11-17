@@ -1,4 +1,4 @@
-unit uFormProducts;
+﻿unit uFormProducts;
 
 interface
 
@@ -318,8 +318,8 @@ var
       AImage.Picture.SaveToStream(Stream);
       Stream.Position := 0;
 
-      SQL := 'INSERT INTO ProductImages (ProductID, ImageData) VALUES (:pid, :data)';
-      DBConnection.ExecSQL(SQL, [AProductID, Stream]);
+//      SQL := 'INSERT INTO ProductImages (ProductID, ImageData) VALUES (:pid, :data)';
+//      DBConnection.ExecSQL(SQL, [AProductID, Stream]); // TODO: Image persistence
     end;
   end;
 

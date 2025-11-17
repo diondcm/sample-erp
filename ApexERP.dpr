@@ -7,7 +7,8 @@ uses
   uBaseForm in 'uBaseForm.pas' {frmBase},
   uFormProducts in 'uFormProducts.pas' {frmProducts},
   uFormCustomers in 'uFormCustomers.pas' {frmCustomers},
-  uFormSales in 'uFormSales.pas' {frmSales};
+  uFormSales in 'uFormSales.pas' {frmSales},
+  uFormReports in 'uFormReports.pas' {frmReports};
 
 {$R *.res}
 

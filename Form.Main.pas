@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls,
   Vcl.ComCtrls, Vcl.ImgList,
-  uDataModule, uBaseForm, uFormProducts, uFormCustomers; // Reference the new units
+  uDataModule, uBaseForm, uFormProducts, uFormCustomers, uFormSales; // Reference the new units
 
 type
   TfrmMain = class(TForm)
@@ -16,6 +16,7 @@ type
     btnToggleTheme: TButton; // For testing
     btnProducts: TButton;
     btnCustomers: TButton;
+    btnSales: TButton;
     Panel1: TPanel;
     cmbLanguage: TComboBoxEx;
     chkCreateDocked: TCheckBox;
@@ -25,6 +26,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure btnProductsClick(Sender: TObject);
     procedure btnCustomersClick(Sender: TObject);
+    procedure btnSalesClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
   private
     FCurrentTheme: TAppTheme;
@@ -139,6 +141,13 @@ procedure TfrmMain.btnCustomersClick(Sender: TObject);
 begin
   // Injects the Connection, Theme, and Language automatically via TBaseForm logic
   OpenChildForm(TfrmCustomers);
+end;
+
+// Event handler for Sales button
+procedure TfrmMain.btnSalesClick(Sender: TObject);
+begin
+  // Injects the Connection, Theme, and Language automatically via TBaseForm logic
+  OpenChildForm(TfrmSales);
 end;
 
 // Event handler for Language change

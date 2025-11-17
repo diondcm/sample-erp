@@ -6,7 +6,8 @@ uses
   uDataModule in 'uDataModule.pas' {dmCore: TDataModule},
   uBaseForm in 'uBaseForm.pas' {frmBase},
   uFormProducts in 'uFormProducts.pas' {frmProducts},
-  uFormCustomers in 'uFormCustomers.pas' {frmCustomers};
+  uFormCustomers in 'uFormCustomers.pas' {frmCustomers},
+  uFormSales in 'uFormSales.pas' {frmSales};
 
 {$R *.res}
 

@@ -101,6 +101,15 @@ object frmMain: TfrmMain
         TabOrder = 1
         OnClick = btnCustomersClick
       end
+      object btnSales: TButton
+        Left = 16
+        Top = 112
+        Width = 168
+        Height = 40
+        Caption = 'Sales'
+        TabOrder = 2
+        OnClick = btnSalesClick
+      end
     end
   end
   object pnlContent: TPanel

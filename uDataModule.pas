@@ -65,6 +65,30 @@ begin
     '  Message TEXT ' +
     ');'
   );
+
+  // --- NEW: Products Table (Electronics Spec) ---
+  fdConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Products (' +
+    '  ProductID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    '  SKU TEXT UNIQUE NOT NULL, ' +
+    '  Name TEXT NOT NULL, ' +
+    '  Category TEXT, ' +
+    '  MSRP REAL, ' +
+    '  StockLevel INTEGER DEFAULT 0, ' +
+    '  FCC_ID TEXT, ' +
+    '  WarrantyMonths INTEGER ' +
+    ');'
+  );
+
+  // --- NEW: Product Images (Limit managed by App Logic) ---
+  fdConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS ProductImages (' +
+    '  ImageID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    '  ProductID INTEGER NOT NULL, ' +
+    '  ImageData BLOB, ' +
+    '  CONSTRAINT fk_products FOREIGN KEY (ProductID) REFERENCES Products (ProductID) ON DELETE CASCADE ' +
+    ');'
+  );
 end;
 
 function TdmCore.GetConnection: TFDConnection;

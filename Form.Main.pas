@@ -5,6 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls,
+  Vcl.ComCtrls, Vcl.ImgList,
   uDataModule, uBaseForm, uFormProducts; // Reference the new units
 
 type
@@ -15,16 +16,21 @@ type
     btnToggleTheme: TButton; // For testing
     btnProducts: TButton;
     Panel1: TPanel;
+    cmbLanguage: TComboBoxEx;
+    chkCreateDocked: TCheckBox;
+    imgLanguages: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure btnToggleThemeClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnProductsClick(Sender: TObject);
+    procedure cmbLanguageChange(Sender: TObject);
   private
     FCurrentTheme: TAppTheme;
     FCurrentLang: TAppLanguage;
     FDataModule: TdmCore; // Main Form owns the Data Module
 
     procedure ApplyGlobalTheme;
+    procedure ApplyGlobalLanguage;
     procedure OpenChildForm(FormClass: TBaseFormClass);
   public
     { Public declarations }
@@ -48,6 +54,9 @@ begin
   // Set Defaults
   FCurrentTheme := atLight;
   FCurrentLang := alEnglish;
+
+  // Initialize language combo box
+  cmbLanguage.ItemIndex := Ord(FCurrentLang); // 0 = English, 1 = Portuguese, 2 = Spanish
 
   ApplyGlobalTheme;
 end;
@@ -97,10 +106,21 @@ begin
   // Passing the Connection, Theme, and Language
   NewForm := FormClass.Create(Self, FDataModule.GetConnection, FCurrentTheme, FCurrentLang);
 
-  // Embed it into the main content panel
-  NewForm.Parent := pnlContent;
-  NewForm.BorderStyle := bsNone;
-  NewForm.Align := alClient;
+  // Check if user wants docked or floating windows
+  if chkCreateDocked.Checked then
+  begin
+    // Docked mode: Embed it into the main content panel
+    NewForm.Parent := pnlContent;
+    NewForm.BorderStyle := bsNone;
+    NewForm.Align := alClient;
+  end
+  else
+  begin
+    // Floating mode: Leave as separate window
+    // Do not set Parent, BorderStyle, or Align
+    // The form will appear as a separate window
+  end;
+
   NewForm.Show;
 end;
 
@@ -110,6 +130,40 @@ begin
   // The beauty of the architecture:
   // We just pass the class type. The logic handles the injection.
   OpenChildForm(TfrmProducts);
+end;
+
+// Event handler for Language change
+procedure TfrmMain.cmbLanguageChange(Sender: TObject);
+begin
+  // Update current language based on combo selection
+  case cmbLanguage.ItemIndex of
+    0: FCurrentLang := alEnglish;
+    1: FCurrentLang := alPortuguese;
+    2: FCurrentLang := alSpanish;
+  end;
+
+  // Apply language to all currently open child forms
+  ApplyGlobalLanguage;
+end;
+
+// Apply language to all currently open child forms
+procedure TfrmMain.ApplyGlobalLanguage;
+var
+  i: Integer;
+  ChildForm: TfrmBase;
+begin
+  // Iterate through all controls in the content panel
+  for i := 0 to pnlContent.ControlCount - 1 do
+  begin
+    // Check if the control is a child form (TfrmBase)
+    if pnlContent.Controls[i] is TfrmBase then
+    begin
+      ChildForm := TfrmBase(pnlContent.Controls[i]);
+      // Update the language property and apply it
+      ChildForm.Language := FCurrentLang;
+      ChildForm.ApplyLanguage;
+    end;
+  end;
 end;
 
 end.

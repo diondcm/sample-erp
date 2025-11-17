@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.WinXCtrls,
   Vcl.ComCtrls, Vcl.ImgList,
-  uDataModule, uBaseForm, uFormProducts; // Reference the new units
+  uDataModule, uBaseForm, uFormProducts, uFormCustomers; // Reference the new units
 
 type
   TfrmMain = class(TForm)
@@ -15,6 +15,7 @@ type
     pnlContent: TPanel; // Area where child forms will appear
     btnToggleTheme: TButton; // For testing
     btnProducts: TButton;
+    btnCustomers: TButton;
     Panel1: TPanel;
     cmbLanguage: TComboBoxEx;
     chkCreateDocked: TCheckBox;
@@ -23,6 +24,7 @@ type
     procedure btnToggleThemeClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnProductsClick(Sender: TObject);
+    procedure btnCustomersClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
   private
     FCurrentTheme: TAppTheme;
@@ -130,6 +132,13 @@ begin
   // The beauty of the architecture:
   // We just pass the class type. The logic handles the injection.
   OpenChildForm(TfrmProducts);
+end;
+
+// Event handler for Customers button
+procedure TfrmMain.btnCustomersClick(Sender: TObject);
+begin
+  // Injects the Connection, Theme, and Language automatically via TBaseForm logic
+  OpenChildForm(TfrmCustomers);
 end;
 
 // Event handler for Language change

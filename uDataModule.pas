@@ -89,6 +89,33 @@ begin
     '  CONSTRAINT fk_products FOREIGN KEY (ProductID) REFERENCES Products (ProductID) ON DELETE CASCADE ' +
     ');'
   );
+
+  // --- NEW: Customers Table (Industry Standard) ---
+  fdConnection.ExecSQL(
+    'CREATE TABLE IF NOT EXISTS Customers (' +
+    '  CustomerID INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    '  CustomerName TEXT NOT NULL, ' +    // Display Name
+    '  LegalName TEXT, ' +                // For Invoicing
+    '  TaxID TEXT, ' +                    // VAT / EIN / CNPJ
+    '  Email TEXT, ' +
+    '  Phone TEXT, ' +
+    '  Website TEXT, ' +
+    '  BillingAddress TEXT, ' +
+    '  BillingCity TEXT, ' +
+    '  BillingState TEXT, ' +
+    '  BillingZip TEXT, ' +
+    '  BillingCountry TEXT, ' +
+    '  CreditLimit REAL DEFAULT 0, ' +
+    '  IsActive INTEGER DEFAULT 1, ' +    // 0 = Hold, 1 = Active
+    '  Notes TEXT, ' +
+    '  CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ' +
+    ');'
+  );
+
+  // Optimization: Index on Name for fast searching
+  fdConnection.ExecSQL(
+    'CREATE INDEX IF NOT EXISTS idx_CustName ON Customers (CustomerName);'
+  );
 end;
 
 function TdmCore.GetConnection: TFDConnection;

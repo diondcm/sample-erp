@@ -19,6 +19,7 @@ type
     FConnection: TFDConnection;
     FTheme: TAppTheme;
     FLanguage: TAppLanguage;
+    procedure SetLanguage(const Value: TAppLanguage);
   protected
     // Override these in child forms to update UI elements
     procedure ApplyTheme; virtual;
@@ -28,7 +29,8 @@ type
     constructor Create(AOwner: TComponent; AConn: TFDConnection; ATheme: TAppTheme; ALang: TAppLanguage); reintroduce; overload; virtual;
 
     property AppTheme: TAppTheme read FTheme;
-    property AppLanguage: TAppLanguage read FLanguage;
+    property AppLanguage: TAppLanguage read FLanguage write SetLanguage;
+    property Language: TAppLanguage read FLanguage write SetLanguage; // Alias for easier access
     property DBConnection: TFDConnection read FConnection;
   end;
 
@@ -65,6 +67,15 @@ end;
 procedure TfrmBase.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree; // Ensure memory is freed when form closes
+end;
+
+procedure TfrmBase.SetLanguage(const Value: TAppLanguage);
+begin
+  if FLanguage <> Value then
+  begin
+    FLanguage := Value;
+    // Language change will be applied by calling ApplyLanguage from the main form
+  end;
 end;
 
 end.

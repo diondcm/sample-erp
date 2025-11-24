@@ -2,3 +2,5 @@
 /*.identcache
 /Win32/Debug
 /__history
+/*.tgitconfig
+/*.exe
